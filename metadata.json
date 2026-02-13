@@ -1,0 +1,8 @@
+{
+  "name": "World Snap Roulette",
+  "description": "Connect with the world by sending and receiving random snapshots across a global map. Authenticate with Google, capture your surroundings, and see where other users are sharing from.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
