@@ -1,11 +1,16 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-// Gebruik altijd de Gemini 3 Flash voor snelle, efficiënte tekst- en beeldtaken
 const MODEL_NAME = 'gemini-3-flash-preview';
 
+// Hulpmiddel om veilig de AI client te initialiseren
+const getAIClient = () => {
+  const apiKey = typeof process !== 'undefined' && process.env ? process.env.API_KEY : '';
+  return new GoogleGenAI({ apiKey: apiKey || '' });
+};
+
 export const analyzeSnap = async (base64Image: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
   try {
     const response = await ai.models.generateContent({
       model: MODEL_NAME,
@@ -27,7 +32,7 @@ export const analyzeSnap = async (base64Image: string) => {
 };
 
 export const getCityName = async (lat: number, lng: number) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
   try {
     const response = await ai.models.generateContent({
       model: MODEL_NAME,

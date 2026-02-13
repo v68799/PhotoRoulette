@@ -5,8 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Snap Roulette</title>
+  
+  <!-- Scripts shim voor process (voorkomt crashes op static hosts) -->
+  <script>
+    window.process = {
+      env: {
+        API_KEY: "" // Wordt extern geïnjecteerd
+      }
+    };
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Leaflet JS - Geladen met defer om zeker te zijn dat L beschikbaar is voor de app -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
   <style>
     body, html, #root {
       height: 100%;
@@ -19,18 +35,24 @@
       background: #1e293b !important;
     }
   </style>
-<script type="importmap">
+
+  <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "@google/genai": "https://esm.sh/@google/genai@1.41.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.41.0"
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
 </head>
 <body>
   <div id="root"></div>
+  <!-- Op GitHub Pages moet deze TSX normaal gesproken gecompileerd zijn naar JS. 
+       We gaan ervan uit dat je een build tool gebruikt of dat de omgeving dit afhandelt. -->
+  <script type="module" src="./index.tsx"></script>
 </body>
 </html>
