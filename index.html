@@ -3,36 +3,41 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>World Snap Roulette</title>
   
-  <!-- Scripts shim voor process (voorkomt crashes op static hosts) -->
+  <!-- 1. Shim process.env (Vóór alle andere scripts) -->
   <script>
-    window.process = {
-      env: {
-        API_KEY: "" // Wordt extern geïnjecteerd
-      }
-    };
+    window.process = { env: { API_KEY: "" } };
+    window.addEventListener('error', function(e) {
+      console.error('Fout gedetecteerd:', e.message);
+    });
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  
-  <!-- Leaflet JS - Geladen met defer om zeker te zijn dat L beschikbaar is voor de app -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   
   <style>
     body, html, #root {
       height: 100%;
+      width: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
       background-color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
     }
-    .leaflet-container {
-      background: #1e293b !important;
+    #root:empty::before {
+      content: 'Laden...';
+      color: #334155;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: sans-serif;
     }
   </style>
 
@@ -51,8 +56,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <!-- Op GitHub Pages moet deze TSX normaal gesproken gecompileerd zijn naar JS. 
-       We gaan ervan uit dat je een build tool gebruikt of dat de omgeving dit afhandelt. -->
-  <script type="module" src="./index.tsx"></script>
+  <!-- Gebruik het exacte bestandspad voor de module -->
+  <script type="module" src="index.tsx"></script>
 </body>
 </html>
